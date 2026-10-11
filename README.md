@@ -78,7 +78,7 @@ Ends the current session and expires the cookie.
 
 ### `POST /api/auth/forgot-password`
 
-Accepts an email and returns a generic response with a short-lived demo reset token. In a deployed real service, send the token through a verified email flow instead of returning it to the browser.
+Accepts an email and returns a generic response. For an existing account, it also returns a short-lived demo reset token for the local on-screen reset flow. In a deployed real service, send the token through a verified email flow instead of returning it to the browser.
 
 ### `POST /api/auth/reset-password`
 

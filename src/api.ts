@@ -11,7 +11,7 @@ export type AuthResult = {
 
 export type PasswordResetResult = {
   message: string;
-  resetToken: string;
+  resetToken?: string;
 };
 
 export class ApiError extends Error {

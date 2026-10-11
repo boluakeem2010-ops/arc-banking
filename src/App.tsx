@@ -209,9 +209,9 @@ export default function App() {
     setAuthNotice('');
     try {
       const result = await requestPasswordReset(email);
-      setResetToken(result.resetToken);
-      setAuthMode('reset');
-      setAuthNotice(`${result.message} ${result.resetToken}`);
+      setResetToken(result.resetToken ?? '');
+      if (result.resetToken) setAuthMode('reset');
+      setAuthNotice(result.resetToken ? `${result.message} ${result.resetToken}` : result.message);
     } catch (cause) {
       setAuthError(toErrorMessage(cause));
     } finally {
@@ -327,7 +327,7 @@ export default function App() {
               <button className="icon-button" aria-label="Search transactions" type="button" onClick={() => handleNavigate('activity')}>⌕</button>
               <button className="icon-button notification" aria-label="Notifications" type="button">♧<i></i></button>
               <span className="top-divider"></span>
-              <span className="today">Tuesday, October 11</span>
+              <span className="today">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
             </div>
           </header>
 

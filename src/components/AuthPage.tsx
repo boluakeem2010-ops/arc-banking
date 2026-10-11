@@ -37,7 +37,7 @@ export function AuthPage({
   const [token, setToken] = useState('');
 
   useEffect(() => {
-    if (resetToken) setToken(resetToken);
+    setToken(resetToken);
   }, [resetToken]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

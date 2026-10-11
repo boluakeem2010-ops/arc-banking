@@ -344,8 +344,10 @@ async function handleApi(request, response, pathname) {
       }));
     }
     sendJson(response, 200, {
-      message: 'If an account exists for that email, a reset link is ready. Demo reset token:',
-      resetToken: token,
+      message: user
+        ? 'If an account exists for that email, a reset link is ready. Demo reset token:'
+        : 'If an account exists for that email, a reset link is ready.',
+      ...(user ? { resetToken: token } : {}),
     });
     return;
   }
