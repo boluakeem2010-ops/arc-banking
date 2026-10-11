@@ -12,7 +12,9 @@ import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 
 const rootDirectory = fileURLToPath(new URL('.', import.meta.url));
-const dataPath = resolve(rootDirectory, 'data.json');
+const dataPath = process.env.VERCEL === '1'
+  ? resolve('/tmp', 'arc-demo-data.json')
+  : resolve(rootDirectory, 'data.json');
 const buildDirectory = resolve(rootDirectory, 'dist');
 const port = Number(process.env.PORT ?? 3001);
 const maxBodyBytes = 16 * 1024;
@@ -497,7 +499,7 @@ async function serveStatic(request, response, pathname) {
   }
 }
 
-const server = createServer(async (request, response) => {
+export async function handleRequest(request, response) {
   try {
     const url = new URL(request.url ?? '/', `http://${request.headers.host ?? 'localhost'}`);
 
@@ -521,13 +523,17 @@ const server = createServer(async (request, response) => {
       response.destroy();
     }
   }
-});
+}
 
-server.listen(port, () => {
-  console.log(`Arc demo server listening at http://localhost:${port}`);
-});
+if (process.env.VERCEL !== '1') {
+  const server = createServer(handleRequest);
 
-server.on('error', (error) => {
-  console.error('Arc server failed to start:', error);
-  process.exitCode = 1;
-});
+  server.listen(port, () => {
+    console.log(`Arc demo server listening at http://localhost:${port}`);
+  });
+
+  server.on('error', (error) => {
+    console.error('Arc server failed to start:', error);
+    process.exitCode = 1;
+  });
+}

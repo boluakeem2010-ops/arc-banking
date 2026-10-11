@@ -25,6 +25,12 @@ npm start
 
 This builds the React application into `dist/`, then starts the Node server at `http://localhost:3001`. Set the `PORT` environment variable to use another port.
 
+## Deploy to Vercel
+
+Import the GitHub repository into Vercel and deploy with the included `vercel.json` configuration. The React app is served as a static Vite build, and `/api/*` requests are handled by the Node.js serverless function.
+
+Vercel demo data is stored temporarily under `/tmp` and can be cleared when a serverless instance restarts. Demo accounts and sessions are not durable. This is for portfolio demonstration only; do not use real personal or financial information.
+
 ## Demo authentication
 
 - Choose **Explore the demo account** on the sign-in screen to start a temporary demo session without creating an account. Demo sessions use the same `HttpOnly`, `SameSite=Strict` session cookie as registered accounts and have their own simulated transfers.
